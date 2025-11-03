@@ -79,7 +79,8 @@ flask-mysql-ci-cd/
   ```
 * If Jenkins cannot run Docker commands: run Jenkins container with Docker socket mounted and install Docker CLI inside Jenkins, and store Docker Hub token in Jenkins Credentials.
 
-## Notes for viva / report
-* Explain why `depends_on` alone is not enough; used a `healthcheck` on DB or deploy-wait logic for reliability.
-* Mention security considerations (use of Docker Hub tokens, secrets in Jenkins).
-* Describe the pipeline stages and how webhooks trigger CI.
+## References
+- [Flask](https://palletsprojects.com/p/flask/)
+- [MySQL Docker images](https://hub.docker.com/_/mysql)
+- [Docker Compose file reference](https://docs.docker.com/compose/compose-file/)
+- [Jenkins Pipelines](https://www.jenkins.io/doc/book/pipeline/getting-started/#getting-started-with-pipelines-in-jenkins)
