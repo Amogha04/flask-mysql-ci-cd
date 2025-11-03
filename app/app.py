@@ -5,8 +5,8 @@ import mysql.connector
 app = Flask(__name__)
 
 DB_HOST = os.environ.get('DB_HOST', 'db')
-DB_USER = os.environ.get('DB_USER', 'flaskuser')
-DB_PASSWORD = os.environ.get('DB_PASSWORD', 'flaskpw')
+DB_USER = os.environ.get('DB_USER', 'amogh')
+DB_PASSWORD = os.environ.get('DB_PASSWORD', 'amogh123')
 DB_NAME = os.environ.get('DB_NAME', 'flaskdb')
 DB_PORT = int(os.environ.get('DB_PORT', 3306))
 
