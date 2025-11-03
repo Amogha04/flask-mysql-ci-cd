@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    environment {
+        DOCKERHUB_USER = "amogha04"
+        IMAGE_NAME = "flask-mysql-app"
+    }
+
     stages {
 
         stage('Clone Repository') {
@@ -10,27 +15,31 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    sh 'docker build -t amogha04/flask-mysql-app .'
-                }
-            }
-        }
-
         stage('Login to DockerHub') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerhub-pass', usernameVariable: 'DOCKERHUB_USER', passwordVariable: 'DOCKERHUB_PASS')]) {
-                    sh "echo $DOCKERHUB_PASS | docker login -u $DOCKERHUB_USER --password-stdin"
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials',
+                    usernameVariable: 'USER',
+                    passwordVariable: 'PASS')]) {
+                        sh "echo $PASS | docker login -u $USER --password-stdin"
                 }
             }
         }
 
-        stage('Push to DockerHub') {
+        stage('Pull Base Image (optional but ensures auth works)') {
             steps {
-                script {
-                    sh 'docker push amogha04/flask-mysql-app'
-                }
+                sh "docker pull python:3.11-slim"
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh "docker build -t ${DOCKERHUB_USER}/${IMAGE_NAME}:latest ."
+            }
+        }
+
+        stage('Push Image to DockerHub') {
+            steps {
+                sh "docker push ${DOCKERHUB_USER}/${IMAGE_NAME}:latest"
             }
         }
     }
